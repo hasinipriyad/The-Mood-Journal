@@ -1,0 +1,208 @@
+/* VARIABLES */
+:root {
+  --bg: #000000;
+  --card: #141414;
+  --text: #ffffff;
+  --subtext: #9a9a9a;
+  --border: #2a2a2a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  font-family: Arial, sans-serif;
+}
+
+/* HEADER */
+header {
+  border-bottom: 1px solid var(--border);
+}
+
+.top-header {
+  text-align: center;
+}
+
+.top-header h1 {
+  padding: 2rem 0;
+  font-size: 2.5rem;
+  letter-spacing: 0.5rem;
+  color: var(--text);
+}
+
+/* MAIN */
+main {
+  padding: 3rem 1rem;
+}
+
+/* FEELING SECTION */
+.user-feeling-div {
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  padding: 2rem;
+  text-align: center;
+  color: var(--text);
+  background: var(--card);
+  border-radius: 10px;
+}
+
+.user-feeling-div p {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* MOODS */
+.mood-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mood-list i {
+  font-size: 2.2rem;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: 0.2s;
+}
+
+.mood-list i:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* NOTES */
+.user-notes-div {
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+#user-notes {
+  width: 100%;
+  height: 150px;
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  resize: none;
+}
+
+/* BUTTON */
+.user-notes-div button {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  background: var(--text);
+  color: black;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.user-notes-div button:hover {
+  opacity: 0.8;
+}
+
+/* ENTRY CARD */
+.entries-header {
+  max-width: 500px;
+  margin: 0 auto 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#delete-all {
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--subtext);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+#delete-all:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+.entries {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.entry-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.entry-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.entry-emoji {
+  font-size: 1.8rem;
+  color: var(--text);
+}
+
+.entry-date {
+  font-size: 0.8rem;
+  color: var(--subtext);
+}
+
+.entry-note {
+  margin-top: 0.5rem;
+  color: var(--text);
+}
+.entry-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.entry-actions button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--subtext);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.entry-actions button:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .user-feeling-div,
+  .user-notes-div,
+  .entries {
+    width: 90%;
+  }
+
+  .top-header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 0.3rem;
+  }
+
+  .user-feeling-div p {
+    font-size: 1.2rem;
+  }
+
+  .mood-list i {
+    font-size: 1.8rem;
+  }
+}

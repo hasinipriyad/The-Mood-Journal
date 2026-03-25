@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>The Mood Journal</title>
+        <meta charset="UTF-8">
+        <meta name="author" content="Hasini Priya">
+        <meta name="description" content="A simple and elegant mood journal app to track your daily emotions and reflections. Select your mood, write a note, and revisit your entries anytime.">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="The Mood Journal — Track Your Daily Emotions">
+        <meta property="og:description" content="Capture your mood and thoughts daily with a minimal and intuitive mood journal. Reflect, track, and understand your emotions better.">
+        <meta property="og:image" content="https://example.com/assets/og-mood-journal.jpg">
+        <meta property="og:url" content="https://example.com/">
+        <meta property="og:type" content="website">
+
+        <!-- Stylesheet -->
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="top-header">
+                    <h1>Mood Journal</h1>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="user-feeling-div">
+                <p>How are you feeling today?</p>
+                <div class="mood-list">
+                    <i class="fa-regular fa-face-grin-beam"></i>
+                    <i class="fa-regular fa-face-smile"></i>
+                    <i class="fa-regular fa-face-meh"></i>
+                    <i class="fa-regular fa-face-frown"></i>
+                    <i class="fa-regular fa-face-tired"></i>
+                </div>
+            </div>
+            <div class="user-notes-div">
+                <form>
+                    <textarea name="user-notes" id="user-notes"></textarea>
+                    <button>Add Entry</button>
+                </form>
+            </div>
+            <div class="entries-header">
+                <button id="delete-all">Delete All</button>
+            </div>
+            <div class="entries">
+                <div class="entry-card">
+                    <div class="entry-top">
+                        <span class="entry-emoji"><i class="fa-regular fa-face-grin-beam"></i></span>
+                        <span class="entry-date">Mar 24, 2026</span>
+                    </div>
+
+                    <p class="entry-note">Had a really productive day today!</p>
+
+                    <div class="entry-actions">
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <script src="script.js"></script>
+    </body>
+</html>
