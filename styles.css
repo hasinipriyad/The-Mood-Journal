@@ -73,6 +73,10 @@ main {
   transform: scale(1.2);
 }
 
+.mood-list .selected {
+  opacity: 1;
+}
+
 /* NOTES */
 .user-notes-div {
   max-width: 500px;
