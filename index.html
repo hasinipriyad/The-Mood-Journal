@@ -30,24 +30,24 @@
             <div class="user-feeling-div">
                 <p>How are you feeling today?</p>
                 <div class="mood-list">
-                    <i class="fa-regular fa-face-grin-beam"></i>
-                    <i class="fa-regular fa-face-smile"></i>
-                    <i class="fa-regular fa-face-meh"></i>
-                    <i class="fa-regular fa-face-frown"></i>
-                    <i class="fa-regular fa-face-tired"></i>
+                    <i class="fa-regular fa-face-grin-beam" data-mood="😁"></i>
+                    <i class="fa-regular fa-face-smile" data-mood="😄"></i>
+                    <i class="fa-regular fa-face-meh" data-mood="😐"></i>
+                    <i class="fa-regular fa-face-frown" data-mood="😞"></i>
+                    <i class="fa-regular fa-face-tired" data-mood="😩"></i>
                 </div>
             </div>
             <div class="user-notes-div">
                 <form>
                     <textarea name="user-notes" id="user-notes" required></textarea>
-                    <button>Add Entry</button>
+                    <button id="add-entry">Add Entry</button>
                 </form>
             </div>
             <div class="entries-header">
                 <button id="delete-all">Delete All</button>
             </div>
             <div class="entries">
-                <div class="entry-card">
+                <!-- <div class="entry-card">
                     <div class="entry-top">
                         <span class="entry-emoji"><i class="fa-regular fa-face-grin-beam"></i></span>
                         <span class="entry-date">Mar 24, 2026</span>
@@ -59,7 +59,7 @@
                         <button class="edit-btn">Edit</button>
                         <button class="delete-btn">Delete</button>
                     </div>
-                </div>
+                </div> -->
             </div>
         </main>
         <script src="script.js"></script>
