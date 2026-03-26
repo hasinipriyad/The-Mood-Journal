@@ -1,54 +1,65 @@
-let moodList = document.querySelector(".mood-list");
-let entryForm = document.querySelector(".user-notes-div form");
-let entries = document.querySelector(".entries");
-let deleteAll = document.querySelector("#delete-all");
-let addBtn = document.getElementById("add-entry");
+const moodList = document.querySelector(".mood-list");
+const entryForm = document.querySelector(".user-notes-div form");
+const entries = document.querySelector(".entries");
+const deleteAll = document.querySelector("#delete-all");
+const addBtn = document.getElementById("add-entry");
+const userNotes = document.getElementById("user-notes");
 
+let currentEditCard = null;
+
+//Mood Selection Event Handler
 function selectMood(e){
-    let moods = document.querySelectorAll(".mood-list i");
+    const moods = document.querySelectorAll(".mood-list i");
     if(e.target.tagName==="I"){
         let emoji = e.target;
         let isSelected = emoji.classList.contains("selected");
-
         moods.forEach((mood)=>{
             mood.classList.remove("selected")
         })
-        
         if(!isSelected){
             emoji.classList.add("selected")
         }
     }
 }
 
+//Add or Update Entry Event Handler
 function onUserEntry(e){
-
-    //Prevent Default
     e.preventDefault();
 
-    //Get the user notes
-    let userEntry = document.querySelector("#user-notes").value;
-
     let moods = Array.from(document.querySelectorAll(".mood-list i"));
-
     let moodSelected = moods.filter((mood)=>{
         return mood.classList.contains("selected")
     })
-
     //Checking if the user already selected a mood or not.
     if(moodSelected.length == 0){
         alert("Please select a mood.");
         return
     }
+    const moodValue = moodSelected[0].dataset.mood;
+    const noteValue = userNotes.value;
 
-    //Add the note to the UI
-    addEntrytoUI(userEntry,moodSelected[0]);
+    if(currentEditCard){
+        currentEditCard.querySelector(".entry-note").textContent = noteValue;
+        currentEditCard.querySelector(".entry-emoji").textContent = moodValue;
+
+        //Reset edit mode
+        currentEditCard = null;
+        addBtn.textContent = "Add Entry";
+        addBtn.classList.remove("edit-mode");
+    }
+    else{
+        //Add the note to the UI
+        addEntrytoUI(noteValue,moodValue);
+    }
+
+    //Form Reset
+    userNotes.value = '';
+    document.querySelectorAll(".mood-list i").forEach(m => m.classList.remove("selected"));
 
     checkUI();
-
 }
 
-function addEntrytoUI(userEntry,userMood){
-    console.dir(userMood.innerHTML)
+function addEntrytoUI(userEntry,userMoodValue){
 
     let entryCard = document.createElement("div");
     entryCard.classList.add("entry-card");
@@ -58,10 +69,7 @@ function addEntrytoUI(userEntry,userMood){
     entryTop.classList.add("entry-top");
     entryCard.append(entryTop);
 
-    // Get the emoji string
-    let userMoodValue = userMood.dataset.mood;
-
-    // Use it in your entry
+    // Use it in user entry
     let entryEmoji = document.createElement("span");
     entryEmoji.classList.add("entry-emoji");
     entryEmoji.textContent = userMoodValue;
@@ -98,7 +106,17 @@ function onDeleteEdit(e){
         }
         checkUI();
     } else if(e.target.classList.contains("edit-btn")){
-        console.log("edit mode");
+        let card = e.target.parentElement.parentElement;
+        const noteText = card.querySelector(".entry-note").textContent;
+        const moodText = card.querySelector(".entry-emoji").textContent;
+
+        userNotes.value = noteText;
+        document.querySelectorAll(".mood-list i").forEach(m => {
+            m.classList.toggle("selected", m.dataset.mood === moodText);
+        });
+        currentEditCard = card;
+        addBtn.textContent = "Update Entry";
+        addBtn.classList.add("edit-mode");
     }
 }
 
@@ -120,8 +138,15 @@ function checkUI(){
     }
 }
 
+//Mood Selection Event Listener
 moodList.addEventListener("click",selectMood)
+//Form Submission Event Listener
 entryForm.addEventListener("submit",onUserEntry)
+//Card Delete and Edit Button Event Listener
 entries.addEventListener("click",onDeleteEdit)
+//Delete All button event Listener
 deleteAll.addEventListener("click",deleteAllEntries)
+//Checking UI to display or hide the Delete All button
 checkUI();
+
+//Local Storage ["entries":"[[mood,value],[mood,value]]"]

@@ -111,6 +111,11 @@ main {
   opacity: 0.8;
 }
 
+.user-notes-div .edit-mode {
+  background-color: var(--subtext);
+  color: var(--text);
+}
+
 /* ENTRY CARD */
 .entries-header {
   max-width: 500px;
