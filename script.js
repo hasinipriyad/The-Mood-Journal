@@ -39,17 +39,27 @@ function onUserEntry(e){
     const noteValue = userNotes.value;
 
     if(currentEditCard){
+
         currentEditCard.querySelector(".entry-note").textContent = noteValue;
         currentEditCard.querySelector(".entry-emoji").textContent = moodValue;
+
+        //Update local storage
+        updateLocalStorage(currentEditCard.dataset.id,moodValue,noteValue);
 
         //Reset edit mode
         currentEditCard = null;
         addBtn.textContent = "Add Entry";
-        addBtn.classList.remove("edit-mode");
+        addBtn.classList.remove("edit-mode");   
     }
     else{
+        //Creating a unique id for each entry.
+        const id = Date.now();
         //Add the note to the UI
-        addEntrytoUI(noteValue,moodValue);
+        let today = new Date();
+        let options = { year: 'numeric', month: 'long', day: 'numeric' };
+        let formattedDate = today.toLocaleDateString('en-US', options);
+        addEntrytoUI(noteValue,moodValue,formattedDate,id);
+        addtoLocalStorage(id,moodValue,noteValue,formattedDate);
     }
 
     //Form Reset
@@ -59,7 +69,7 @@ function onUserEntry(e){
     checkUI();
 }
 
-function addEntrytoUI(userEntry,userMoodValue){
+function addEntrytoUI(userEntry,userMoodValue, userDate, id){
 
     let entryCard = document.createElement("div");
     entryCard.classList.add("entry-card");
@@ -78,7 +88,7 @@ function addEntrytoUI(userEntry,userMoodValue){
     //Creating today's date format
     let today = new Date();
     let options = { year: 'numeric', month: 'long', day: 'numeric' };
-    let formattedDate = today.toLocaleDateString('en-US', options);
+    let formattedDate = userDate ?? today.toLocaleDateString('en-US', options);
 
     let entryDate = document.createElement("span");
     entryDate.classList.add('entry-date');
@@ -95,8 +105,8 @@ function addEntrytoUI(userEntry,userMoodValue){
     entryActions.innerHTML = `<button class="edit-btn">Edit</button>
                        <button class="delete-btn">Delete</button>`
     entryCard.append(entryActions);
-
-    addtoLocalStorage(userMoodValue,userEntry,formattedDate);
+   
+    entryCard.dataset.id = id;
 }
 
 //Delete a User Entry
@@ -104,6 +114,7 @@ function onDeleteEdit(e){
     if(e.target.classList.contains("delete-btn")){
         let entryCard = e.target.parentElement.parentElement;
         if(confirm("Are you sure you want to delete?")){
+            deleteFromLocalStorage(entryCard.dataset.id);
             entryCard.remove();
         }
         checkUI();
@@ -126,6 +137,7 @@ function onDeleteEdit(e){
 function deleteAllEntries(){
     if(confirm("Are you sure you want to delete all entries?")){
         entries.innerHTML = '';
+        clearLocalStorage();
         checkUI();
     }
 }
@@ -140,12 +152,48 @@ function checkUI(){
     }
 }
 
+//Fetch and display items from the local storage
+function displayLocalEntries(){
+    const storedEntries = JSON.parse(localStorage.getItem("entries"));
+    if(storedEntries){
+        storedEntries.forEach((entry)=>{
+            addEntrytoUI(entry.note, entry.mood, entry.date, entry.id);
+        })
+    }
+}
+
 //Adding items to local Storage.
-function addtoLocalStorage(mood,note,date){
+function addtoLocalStorage(id,mood,note,date){
     const storedEntries = JSON.parse(localStorage.getItem("entries")) || [];
-    const entry = {mood,note,date};
+    const entry = {id,mood,note,date};
     storedEntries.push(entry);
     localStorage.setItem("entries",JSON.stringify(storedEntries));
+}
+
+//Update items in the local storage
+function updateLocalStorage(id,mood,note){
+    const storedEntries = JSON.parse(localStorage.getItem("entries"))  || [];
+    storedEntries.forEach((entry)=>{
+        if(entry.id == id){
+            entry.mood = mood;
+            entry.note = note;
+        }
+    })
+    localStorage.setItem("entries",JSON.stringify(storedEntries));
+}
+
+//Delete items in the local storage
+function deleteFromLocalStorage(id){
+    let storedEntries = JSON.parse(localStorage.getItem("entries"))  || [];
+    storedEntries = storedEntries.filter((entry)=>{
+        return entry.id != id;
+    })
+    localStorage.setItem("entries",JSON.stringify(storedEntries));
+}
+
+//Clear all from local storage
+function clearLocalStorage(){
+    localStorage.removeItem("entries");
 }
 
 //Mood Selection Event Listener
@@ -158,3 +206,5 @@ entries.addEventListener("click",onDeleteEdit)
 deleteAll.addEventListener("click",deleteAllEntries)
 //Checking UI to display or hide the Delete All button
 checkUI();
+//Display entries from the local storage
+displayLocalEntries();
