@@ -204,7 +204,7 @@ entryForm.addEventListener("submit",onUserEntry)
 entries.addEventListener("click",onDeleteEdit)
 //Delete All button event Listener
 deleteAll.addEventListener("click",deleteAllEntries)
-//Checking UI to display or hide the Delete All button
-checkUI();
 //Display entries from the local storage
 displayLocalEntries();
+//Checking UI to display or hide the Delete All button
+checkUI();
