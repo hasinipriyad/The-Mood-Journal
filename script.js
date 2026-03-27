@@ -95,6 +95,8 @@ function addEntrytoUI(userEntry,userMoodValue){
     entryActions.innerHTML = `<button class="edit-btn">Edit</button>
                        <button class="delete-btn">Delete</button>`
     entryCard.append(entryActions);
+
+    addtoLocalStorage(userMoodValue,userEntry,formattedDate);
 }
 
 //Delete a User Entry
@@ -138,6 +140,14 @@ function checkUI(){
     }
 }
 
+//Adding items to local Storage.
+function addtoLocalStorage(mood,note,date){
+    const storedEntries = JSON.parse(localStorage.getItem("entries")) || [];
+    const entry = {mood,note,date};
+    storedEntries.push(entry);
+    localStorage.setItem("entries",JSON.stringify(storedEntries));
+}
+
 //Mood Selection Event Listener
 moodList.addEventListener("click",selectMood)
 //Form Submission Event Listener
@@ -148,5 +158,3 @@ entries.addEventListener("click",onDeleteEdit)
 deleteAll.addEventListener("click",deleteAllEntries)
 //Checking UI to display or hide the Delete All button
 checkUI();
-
-//Local Storage ["entries":"[[mood,value],[mood,value]]"]
